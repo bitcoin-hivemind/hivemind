@@ -87,6 +87,7 @@ QT_FORMS_UI = \
   qt/forms/editaddressdialog.ui \
   qt/forms/helpmessagedialog.ui \
   qt/forms/intro.ui \
+  qt/forms/marketgraphwidget.ui \
   qt/forms/marketview.ui \
   qt/forms/markettradeview.ui \
   qt/forms/openuridialog.ui \
@@ -125,6 +126,7 @@ QT_MOC_CPP = \
   qt/moc_intro.cpp \
   qt/moc_macdockiconhandler.cpp \
   qt/moc_macnotificationhandler.cpp \
+  qt/moc_marketgraphwidget.cpp \
   qt/moc_marketview.cpp \
   qt/moc_marketmodel.cpp \
   qt/moc_markettradeview.cpp \
@@ -166,6 +168,7 @@ QT_MOC_CPP = \
   qt/moc_overviewpage.cpp \
   qt/moc_peertablemodel.cpp \
   qt/moc_paymentserver.cpp \
+  qt/moc_qcustomplot.cpp \
   qt/moc_qvalidatedlineedit.cpp \
   qt/moc_qvaluecombobox.cpp \
   qt/moc_receivecoinsdialog.cpp \
@@ -270,6 +273,7 @@ HIVEMIND_QT_H = \
   qt/decisionview.h \
   qt/decisionviewgraph.h \
   qt/hivemindrecenttablemodel.h \
+  qt/marketgraphwidget.h \
   qt/marketviewgraph.h \
   qt/networkstyle.h \
   qt/notificator.h \
@@ -280,6 +284,7 @@ HIVEMIND_QT_H = \
   qt/paymentrequestplus.h \
   qt/paymentserver.h \
   qt/peertablemodel.h \
+  qt/qcustomplot.h \
   qt/qvalidatedlineedit.h \
   qt/qvaluecombobox.h \
   qt/receivecoinsdialog.h \
@@ -379,6 +384,7 @@ HIVEMIND_QT_CPP = \
   qt/optionsdialog.cpp \
   qt/optionsmodel.cpp \
   qt/peertablemodel.cpp \
+  qt/qcustomplot.cpp \
   qt/qvalidatedlineedit.cpp \
   qt/qvaluecombobox.cpp \
   qt/rpcconsole.cpp \
@@ -435,6 +441,7 @@ HIVEMIND_QT_CPP += \
   qt/decisionview.cpp \
   qt/decisionviewgraph.cpp \
   qt/hivemindrecenttablemodel.cpp \
+  qt/marketgraphwidget.cpp \
   qt/marketview.cpp \
 	qt/marketmodel.cpp \
   qt/markettradeview.cpp \

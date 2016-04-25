@@ -3,9 +3,9 @@
 
 #include "json/json_spirit_writer_template.h"
 #include "uint256.h"
-#include <string>
 
 #include <QWidget>
+#include "marketgraphwidget.h"
 
 namespace Ui {
 class MarketTradeView;
@@ -43,6 +43,9 @@ private:
 
     // Market ID
     uint256 uMarketID;
+
+    // Market graph
+    MarketGraphWidget *marketGraph;
 };
 
 #endif // MARKETTRADEVIEW_H

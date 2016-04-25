@@ -17,6 +17,10 @@ MarketTradeView::MarketTradeView(QWidget *parent) :
 
     connect(this, SIGNAL(finalizeError(QString)),
             this, SLOT(on_finalizeError(QString)));
+
+    marketGraph = new MarketGraphWidget(this);
+    marketGraph->setFixedSize(540, 380);
+    ui->frameMarketGraph->layout()->addWidget(marketGraph);
 }
 
 MarketTradeView::~MarketTradeView()

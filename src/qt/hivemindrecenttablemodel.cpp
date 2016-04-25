@@ -164,6 +164,7 @@ void HivemindRecentTableModel::updateModel()
     recentObjects.clear();
     endResetModel();
 
+    // TODO Performance / memory
     // TODO Replace some pmarkettree calls with calls to hivemind model classes
     // TODO get branches other than main:
     // vector<marketBranch *> branches = pmarkettree->GetBranches();
