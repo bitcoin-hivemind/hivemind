@@ -10,5 +10,5 @@ if  ! [[ -n "$threads" ]]; then
 fi
 
 ./autogen.sh
-./configure --with-incompatible-bdb
+./configure --with-incompatible-bdb --disable-tests
 make -j $threads
