@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # create multiresolution windows icon
 ICON_SRC=../../src/qt/res/icons/hivemind.png
 ICON_DST=../../src/qt/res/icons/hivemind.ico
