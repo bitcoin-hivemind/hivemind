@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2017 The Hivemind Core developers
+ * Distributed under the MIT software license, see the accompanying
+ * file COPYING or http://www.opensource.org/licenses/mit-license.php.
+ */
 // Automatically generated file. Do not modify.
 #ifndef HIVEMIND_UNIVALUE_UNIVALUE_ESCAPES_H
 #define HIVEMIND_UNIVALUE_UNIVALUE_ESCAPES_H
