@@ -436,6 +436,7 @@ bool ResolveVoteDialog::eventFilter(QObject *obj, QEvent *event)
                     };
                     delete[] isNA;
                     delete[] dvalue;
+                    delete[] num_fields;
                 }
                 return true;
             }
