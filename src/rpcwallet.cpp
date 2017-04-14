@@ -2920,7 +2920,7 @@ Value createtrade(const Array& params, bool fHelp)
     obj.nShares = uint64FromValue(params[3], false);
     obj.price = uint64FromValue(params[4], false);
     obj.decisionState = (uint32_t)params[5].get_int();
-    obj.nonce = (params.size() != 7)? 0: (uint32_t)params[6].get_int();
+    obj.nonce = (params.size() != 7)? rand(): (uint32_t)params[6].get_int();
 
     /* double-check decisionState */
     uint32_t nStates = marketNStates(market);
@@ -2936,16 +2936,24 @@ Value createtrade(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_WALLET_ERROR, strError.c_str());
     }
 
-    // TODO: Increase nonce for repeated trades
-    /* double-check object is not a duplicate */
     uint256 objid = obj.GetHash();
-    marketTrade *tmptrade = pmarkettree->GetTrade(objid);
-    if (tmptrade) {
-        delete tmptrade;
-        delete market;
-        string strError = std::string("Error: tradeid ")
-            + objid.ToString() + " already exists!";
-        throw JSONRPCError(RPC_WALLET_ERROR, strError.c_str());
+    while(true) {
+        marketTrade *tmptrade = pmarkettree->GetTrade(objid);
+        if (tmptrade) {
+            delete tmptrade;
+            if (params.size() == 7) {
+                delete market;
+                string strError = std::string("Error: tradeid ")
+                    + objid.ToString() + " already exists!";
+                throw JSONRPCError(RPC_WALLET_ERROR, strError.c_str());
+            }
+            else {
+                obj.nonce++;
+                objid = obj.GetHash();
+                continue;
+            }
+        }
+        break;
     }
 
     /* trades of the market */
