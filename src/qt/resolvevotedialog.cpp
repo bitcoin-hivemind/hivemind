@@ -355,50 +355,87 @@ bool ResolveVoteDialog::eventFilter(QObject *obj, QEvent *event)
             {
                 /* Ctrl-V: paste into the selected cells */
                 QString text = QApplication::clipboard()->text();
-                QStringList lines = text.split("\n");
+                QStringList lines = text.split("\n", QString::SkipEmptyParts);
                 QItemSelectionModel *selection = tableView->selectionModel();
                 QModelIndexList indexes = selection->selectedIndexes();
                 if (indexes.size() && indexes.at(0).isValid()) {
                     int row = indexes.at(0).row();
                     int col = indexes.at(0).column();
-                    for(int i=0; i < lines.size(); i++) {
+                    bool **isNA = new bool *[lines.size()];
+                    double **dvalue = new double *[lines.size()];
+                    int *num_fields = new int[lines.size()];
+                    bool parse_error = false;
+                    for(int i=0; i < lines.size() && !parse_error; i++) {
                         QStringList fields = lines[i].split("\t");
-                        for(int j=0; j < fields.size(); j++) {
-                            if (col + j >= (int)vote->nc + 1)
-                                break;
-
-                            std::string field = fields[j].toStdString();
-                            bool isNA = (strstr(field.c_str(), "NA"))? true: false;
-                            bool ok = false;
-                            double dvalue = fields[j].toDouble(&ok);
-                            if (!ok) {
-                                QMessageBox msgBox;
-                                msgBox.setText(tr("Enter a valid number or NA"));
-                                msgBox.exec();
-                                break;
+                        isNA[i] = new bool[fields.size()];
+                        dvalue[i] = new double[fields.size()];
+                        num_fields[i] = fields.size();
+                        for(int j=0; j < fields.size() && !parse_error; j++) {
+                            bool voterDecisionCell = col + j >= 1 && row + i >= 3;
+                            if (fields[j] == "NA" && voterDecisionCell) {
+                                isNA[i][j] = true;
+                                dvalue[i][j] = 0.0;
                             }
-
-                            if (col + j == 0) { /* Old Rep */
-                                if ((row+i >= 3) && (row+i-3 < (int)vote->nr))
-                                    vote->rvecs[TC_VOTE_OLD_REP]->a[row+i-3][0] = dvalue;
+                            else {
+                                isNA[i][j] = false;
+                                bool ok;
+                                dvalue[i][j] = fields[j].toDouble(&ok);
+                                if (!ok) {
+                                    QMessageBox msgBox;
+                                    if (voterDecisionCell) {
+                                        msgBox.setText(tr("Enter a valid number or NA"));
+                                    }
+                                    else {
+                                        msgBox.setText(tr("Enter a valid number"));
+                                    }
+                                    if (lines.size() > 1 || fields.size() > 1) {
+                                        msgBox.setInformativeText(QString(tr(
+                                                "The text '%1' in column %2, row %3 of "
+                                                "the pasted data is not a valid value")).
+                                                arg(fields[j]).arg(j + 1).arg(i + 1));
+                                    }
+                                    msgBox.exec();
+                                    parse_error = true;
+                                }
                             }
-                            else
-                            if (row + i == 0) /* Binary/Scalar */
-                                vote->cvecs[TC_VOTE_IS_BINARY]->a[0][col+j-1]
-                                    = (dvalue < 0.5)? 0.0: 1.0;
-                            else
-                            if (row + i == 1) /* Minimum */
-                               ;
-                            else
-                            if (row + i == 2) /* Maximum */
-                               ;
-                            else
-                            if (row + i < 3 + (int)vote->nr)
-                               vote->M->a[row+i-3][col+j-1] = (isNA)? vote->NA: dvalue;
                         }
                     }
-                    inputTableModel->onDataChange();
-                    onInputChange();
+
+                    if (!parse_error) {
+                        for(int i=0; i < lines.size(); i++) {
+                            for(int j=0; j < num_fields[i]; j++) {
+                                if (col + j >= (int)vote->nc + 1)
+                                    break;
+
+                                if (col + j == 0) { /* Old Rep */
+                                    if ((row+i >= 3) && (row+i-3 < (int)vote->nr))
+                                        vote->rvecs[TC_VOTE_OLD_REP]->a[row+i-3][0] = dvalue[i][j];
+                                }
+                                else
+                                if (row + i == 0) /* Binary/Scalar */
+                                    vote->cvecs[TC_VOTE_IS_BINARY]->a[0][col+j-1]
+                                        = (dvalue[i][j] < 0.5)? 0.0: 1.0;
+                                else
+                                if (row + i == 1) /* Minimum */
+                                   ;
+                                else
+                                if (row + i == 2) /* Maximum */
+                                   ;
+                                else
+                                if (row + i < 3 + (int)vote->nr)
+                                   vote->M->a[row+i-3][col+j-1] = (isNA[i][j])? vote->NA: dvalue[i][j];
+                            }
+                        }
+                        inputTableModel->onDataChange();
+                        onInputChange();
+                    }
+                    
+                    for(int i=0; i < lines.size() && !parse_error; i++) {
+                        delete[] isNA[i];
+                        delete[] dvalue[i];
+                    };
+                    delete[] isNA;
+                    delete[] dvalue;
                 }
                 return true;
             }
