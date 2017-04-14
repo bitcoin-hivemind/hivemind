@@ -114,7 +114,7 @@ QVariant ResolveVoteInputTableModel::headerData(int section, Qt::Orientation ori
     {
         if (role == Qt::DisplayRole) {
             if (section == 0) return QVariant(tr("Binary/Scalar"));
-            if (section == 1) return QVariant(tr("Minumum"));
+            if (section == 1) return QVariant(tr("Minimum"));
             if (section == 2) return QVariant(tr("Maximum"));
             char tmp[32];
             snprintf(tmp, sizeof(tmp), "Voter %u", section - 2);
