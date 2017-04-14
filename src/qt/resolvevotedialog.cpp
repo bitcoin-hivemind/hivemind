@@ -467,7 +467,7 @@ void ResolveVoteDialog::onNVotersChange()
 void ResolveVoteDialog::onNDecisionsChange()
 {
     char tmp[32];
-    uint32_t nDecisions = atoi(nDecisionsLineEdit->text().toStdString().c_str());
+    uint32_t nDecisions = nDecisionsLineEdit->text().toUInt();
 
     if ((nDecisions <= 0) || (nDecisions == vote->nc)) {
         /* bad input or no change. reset. */
@@ -521,7 +521,7 @@ void ResolveVoteDialog::onNDecisionsChange()
 void ResolveVoteDialog::onAlphaChange()
 {
     char tmp[32];
-    double alpha = atof(alphaLineEdit->text().toStdString().c_str());
+    double alpha = alphaLineEdit->text().toDouble();
     if ((alpha <= 0.0) || (alpha == vote->alpha)) {
         /* bad input or no change. reset. */
         snprintf(tmp, sizeof(tmp), "%.8f", vote->alpha);
@@ -539,7 +539,7 @@ void ResolveVoteDialog::onAlphaChange()
 void ResolveVoteDialog::onTolChange()
 {
     char tmp[32];
-    double tol = atof(tolLineEdit->text().toStdString().c_str());
+    double tol = tolLineEdit->text().toDouble();
     if ((tol <= 0.0) || (tol == vote->tol)) {
         /* bad input or no change. reset. */
         snprintf(tmp, sizeof(tmp), "%.8f", vote->tol);
@@ -557,7 +557,7 @@ void ResolveVoteDialog::onTolChange()
 void ResolveVoteDialog::onNAChange()
 {
     char tmp[32];
-    double NA = atof(NALineEdit->text().toStdString().c_str());
+    double NA  = NALineEdit->text().toDouble();
     if ((NA <= 0.0) || (NA == vote->NA)) {
         /* bad input or no change. reset. */
         snprintf(tmp, sizeof(tmp), "%.8e", vote->NA);
