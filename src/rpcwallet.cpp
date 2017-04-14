@@ -3299,12 +3299,19 @@ Value createrevealvote(const Array& params, bool fHelp)
                 + str + " is not in correct form!";
             throw JSONRPCError(RPC_WALLET_ERROR, strError.c_str());
         }
-        std::string vote = str.substr(separator+1);
+        std::string vote_str = str.substr(separator+1);
+        char *end = (char *)vote_str.c_str();
+        uint64_t vote = rounduint64(strtod(vote_str.c_str(), &end) * COIN);
+        if (vote_str.c_str() == end) {
+            string strError = std::string("Error: vote ")
+                + vote_str + " is not in correct form";
+            throw JSONRPCError(RPC_WALLET_ERROR, strError.c_str());
+        }
         str.erase(separator);
         uint256 decisionid;
         decisionid.SetHex(str.c_str());
         obj.decisionIDs.push_back(decisionid);
-        obj.decisionVotes.push_back(rounduint64(atof(vote.c_str())* COIN));
+        obj.decisionVotes.push_back(vote);
     }
 
     // ensure unlocked wallet
