@@ -11,6 +11,8 @@ extern "C" {
 #include "resolvevotedialog.h"
 #include "resolvevoteinputtablemodel.h"
 
+#include <QMessageBox>
+
 ResolveVoteInputTableModel::ResolveVoteInputTableModel()
     : QAbstractTableModel(0),
     resolveVoteDialog(0),
@@ -168,7 +170,14 @@ bool ResolveVoteInputTableModel::setData(const QModelIndex &index, const QVarian
     if (value.toString() == "NA") {
         isNA = true;
     } else {
-        dvalue = value.toDouble();
+        bool ok;
+        dvalue = value.toDouble(&ok);
+        if (!ok) {
+            QMessageBox msgBox;
+            msgBox.setText(tr("Enter a valid number or NA"));
+            msgBox.exec();
+            return false;
+        }
     }
 
     int row = index.row();
