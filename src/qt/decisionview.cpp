@@ -1362,17 +1362,17 @@ void DecisionView::onCreateBranchClicked(void)
 
     std::string name = (branchName->text().size())? branchName->text().toStdString(): "<name>";
     std::string description = (branchDescription->text().size())? branchDescription->text().toStdString(): "<description>";
-    double baselistingfee = atof( branchBaseListingFee->text().toStdString().c_str() );
-    int freedecisions = atoi( branchFreeDecisions->text().toStdString().c_str() );
-    int targetdecisions = atoi( branchTargetDecisions->text().toStdString().c_str() );
-    int maxdecisions = atoi( branchMaxDecisions->text().toStdString().c_str() );
-    double mintradingfee = atof( branchMinTradingFee->text().toStdString().c_str() );
-    int tau = atoi( branchTau->text().toStdString().c_str() );
-    int ballottime = atoi( branchBallotTime->text().toStdString().c_str() );
-    int unsealtime = atoi( branchUnsealTime->text().toStdString().c_str() );
-    double consensusthreshold = atof( branchConsensusThreshold->text().toStdString().c_str() );
-    double alpha = atof( branchTol->text().toStdString().c_str() );
-    double tol = atof( branchAlpha->text().toStdString().c_str() );
+    double baselistingfee = branchBaseListingFee->text().toDouble();
+    int freedecisions = branchFreeDecisions->text().toInt();
+    int targetdecisions = branchTargetDecisions->text().toInt();
+    int maxdecisions = branchMaxDecisions->text().toInt();
+    double mintradingfee = branchMinTradingFee->text().toDouble();
+    int tau = branchTau->text().toInt();
+    int ballottime = branchBallotTime->text().toInt();
+    int unsealtime = branchUnsealTime->text().toInt();
+    double consensusthreshold = branchConsensusThreshold->text().toDouble();
+    double alpha = branchTol->text().toDouble();
+    double tol = branchAlpha->text().toDouble();
 
     Array params;
     params.push_back( Value(name) );
@@ -1433,11 +1433,11 @@ void DecisionView::onCreateDecisionClicked(void)
     std::string address = (decisionAddress->text().size())? decisionAddress->text().toStdString(): "<address>";
     std::string branchid = (branchTabLabels[11].text().size())? branchTabLabels[11].text().toStdString(): "<branchid>";
     std::string prompt = (decisionPrompt->text().size())? decisionPrompt->text().toStdString(): "<prompt>";
-    int eventoverby = atoi( decisionEventOverBy->text().toStdString().c_str() );
+    int eventoverby = decisionEventOverBy->text().toInt();
     bool answer_optionality = (decisionAnswerIsOptionalRadioButton->isChecked())? true: false;
     bool is_scaled = (decisionIsBinaryRadioButton->isChecked())? false: true;
-    double scaled_min = atof( decisionMinimum->text().toStdString().c_str() );
-    double scaled_max = atof( decisionMaximum->text().toStdString().c_str() );
+    double scaled_min = decisionMinimum->text().toDouble();
+    double scaled_max = decisionMaximum->text().toDouble();
 
     Array params;
     params.push_back( Value(address) );
@@ -1502,15 +1502,15 @@ void DecisionView::onCreateMarketClicked(void)
     std::string decisionid = (decisionTabLabels[8].text().size())? decisionTabLabels[8].text().toStdString(): "<decisionid>";
     decisionid += ":";
     decisionid += marketDecisionFunction->currentText().toStdString();
-    double B = atof( marketB->text().toStdString().c_str() );
-    double trading_fee = atof( marketTradingFee->text().toStdString().c_str() );
-    double max_commission = atof( marketMaxCommission->text().toStdString().c_str() );
+    double B = marketB->text().toDouble();
+    double trading_fee = marketTradingFee->text().toDouble();
+    double max_commission = marketMaxCommission->text().toDouble();
     std::string title = (marketTitle->text().size())? marketTitle->text().toStdString(): "<title>";
     std::string description = (marketDescription->text().size())? marketDescription->text().toStdString(): "<description>";
     std::string tags = (marketTags->text().size())? marketTags->text().toStdString(): "<tags>";
-    int maturation = atof( marketMaturation->text().toStdString().c_str() );
-    int txPoWh = atoi( marketTxPoWh->text().toStdString().c_str() );
-    int txPoWd = atoi( marketTxPoWd->text().toStdString().c_str() );
+    int maturation = marketMaturation->text().toDouble();
+    int txPoWh = marketTxPoWh->text().toInt();
+    int txPoWd = marketTxPoWd->text().toInt();
 
     Array params;
     params.push_back( Value(address) );
@@ -1569,10 +1569,10 @@ void DecisionView::onCreateTradeClicked(void)
     std::string address = (tradeAddress->text().size())? tradeAddress->text().toStdString(): "<address>";
     std::string marketid = (marketTabLabels[10].text().size())? marketTabLabels[10].text().toStdString(): "<marketid>";
     std::string buy_or_sell = (tradeBuyRadioButton->isChecked())? "buy": "sell";
-    double number_shares = atof( tradeShares->text().toStdString().c_str() );
-    double price = atof( tradePrice->text().toStdString().c_str() );
-    int decision_state = atoi( tradeDecState->text().toStdString().c_str() );
-    int nonce = atoi( tradeNonce->text().toStdString().c_str() );
+    double number_shares = tradeShares->text().toDouble();
+    double price = tradePrice->text().toDouble();
+    int decision_state = tradeDecState->text().toInt();
+    int nonce = tradeNonce->text().toInt();
 
     Array params;
     params.push_back( Value(address) );

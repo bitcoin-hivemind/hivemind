@@ -1327,8 +1327,8 @@ void BallotView::onCreateVoteClicked(void)
     std::string address = (tradeAddress->text().size())? tradeAddress->text().toStdString(): "<address>";
     std::string marketid = (marketTabLabels[8].text().size())? marketTabLabels[8].text().toStdString(): "<marketid>";
     std::string buy_or_sell = (tradeBuyRadioButton->isChecked())? "buy": "sell";
-    double number_shares = atof( tradeShares->text().toStdString().c_str() );
-    double price = atof( tradePrice->text().toStdString().c_str() );
+    double number_shares = tradeShares->text().toDouble();
+    double price = tradePrice->text().toDouble();
     int decision_state = atoi( tradeDecState->text().toStdString().c_str() );
     int nonce = atoi( tradeNonce->text().toStdString().c_str() );
 
