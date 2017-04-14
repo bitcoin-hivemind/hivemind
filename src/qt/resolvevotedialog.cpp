@@ -364,7 +364,7 @@ bool ResolveVoteDialog::eventFilter(QObject *obj, QEvent *event)
                     for(int i=0; i < lines.size(); i++) {
                         QStringList fields = lines[i].split("\t");
                         for(int j=0; j < fields.size(); j++) {
-                            if (col + 1 + j >= (int)vote->nc)
+                            if (col + j >= (int)vote->nc + 1)
                                 break;
 
                             std::string field = fields[j].toStdString();
