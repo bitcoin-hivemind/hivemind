@@ -369,7 +369,14 @@ bool ResolveVoteDialog::eventFilter(QObject *obj, QEvent *event)
 
                             std::string field = fields[j].toStdString();
                             bool isNA = (strstr(field.c_str(), "NA"))? true: false;
-                            double dvalue = atof(field.c_str());
+                            bool ok = false;
+                            double dvalue = fields[j].toDouble(&ok);
+                            if (!ok) {
+                                QMessageBox msgBox;
+                                msgBox.setText(tr("Enter a valid number or NA"));
+                                msgBox.exec();
+                                break;
+                            }
 
                             if (col + j == 0) { /* Old Rep */
                                 if ((row+i >= 3) && (row+i-3 < (int)vote->nr))
