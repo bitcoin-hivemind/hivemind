@@ -108,6 +108,7 @@ QT_MOC_CPP = \
   qt/moc_askpassphrasedialog.cpp \
   qt/moc_authorview.cpp \
   qt/moc_authorpendingtablemodel.cpp \
+  qt/moc_branchselect.cpp \
   qt/moc_hivemindaddressvalidator.cpp \
   qt/moc_hivemindamountfield.cpp \
   qt/moc_hivemindgui.cpp \
@@ -222,6 +223,7 @@ HIVEMIND_QT_H = \
   qt/askpassphrasedialog.h \
   qt/authorview.h \
   qt/authorpendingtablemodel.h \
+  qt/branchselect.h \
   qt/hivemindaddressvalidator.h \
   qt/hivemindamountfield.h \
   qt/hivemindgui.h \
@@ -296,6 +298,7 @@ HIVEMIND_QT_H = \
   qt/resolvevoterowtablemodel.h \
   qt/resolvevoteinputtablemodel.h \
   qt/rpcconsole.h \
+  qt/rpcwrapper.h \
   qt/scicon.h \
   qt/sendcoinsdialog.h \
   qt/sendcoinsentry.h \
@@ -405,6 +408,7 @@ HIVEMIND_QT_CPP += \
   qt/addressbookpage.cpp \
   qt/addresstablemodel.cpp \
   qt/askpassphrasedialog.cpp \
+  qt/branchselect.cpp \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
   qt/combocreationwidget.cpp \
@@ -459,6 +463,7 @@ HIVEMIND_QT_CPP += \
   qt/resolvevotecoltablemodel.cpp \
   qt/resolvevoterowtablemodel.cpp \
   qt/resolvevoteinputtablemodel.cpp \
+  qt/rpcwrapper.cpp \
   qt/sendcoinsdialog.cpp \
   qt/sendcoinsentry.cpp \
   qt/signverifymessagedialog.cpp \

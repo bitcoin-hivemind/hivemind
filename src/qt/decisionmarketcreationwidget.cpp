@@ -150,17 +150,7 @@ void DecisionMarketCreationWidget::on_pushButtonCreateMarket_clicked()
 void DecisionMarketCreationWidget::on_pushButtonSelectDecision_clicked()
 {
     // Grab the ID of the user selected branch
-    QString branchID;
-    if (ui->comboBoxBranch->currentText() == "Main") {
-        branchID = "0f894a25c5e0318ee148fe54600ebbf50782f0a1df1eb2aab06321a8ccec270d";
-    }
-
-    // Exit if no branch is selected (technically impossible via the UI)
-    if (branchID.isEmpty()) return;
-
-    // Grab the branch
-    uint256 uBranch;
-    uBranch.SetHex(branchID.toStdString());
+    uint256 uBranch = ui->branchSelect->currentId();
     const marketBranch *branch = pmarkettree->GetBranch(uBranch);
 
     if (!branch) return;

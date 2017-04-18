@@ -2,6 +2,7 @@
 #include "ui_decisioncreationwidget.h"
 
 #include <QMessageBox>
+#include "uint256.h"
 
 DecisionCreationWidget::DecisionCreationWidget(QWidget *parent) :
     QWidget(parent),
@@ -23,11 +24,7 @@ DecisionCreationWidget::~DecisionCreationWidget()
 
 json_spirit::Array DecisionCreationWidget::createDecisionArray()
 {
-    // Main branch ID
-    QString branchID;
-    if (ui->comboBoxBranch->currentText() == "Main") {
-        branchID = "0f894a25c5e0318ee148fe54600ebbf50782f0a1df1eb2aab06321a8ccec270d";
-    }
+    uint256 branchId = ui->branchSelect->currentId();
 
     // Grab user input from ui
     QString address = ui->lineEditOwnerAddr->text();
@@ -46,7 +43,7 @@ json_spirit::Array DecisionCreationWidget::createDecisionArray()
     bool error = false;
 
     // Perform basic checks and avoid wasting json calls
-    if (branchID.isEmpty()) {
+    if (branchId.IsNull()) {
         emit inputError("You must select a branch!");
         error = true;
     }
@@ -79,7 +76,7 @@ json_spirit::Array DecisionCreationWidget::createDecisionArray()
 
     // Add parameters to array
     params.push_back(address.toStdString());
-    params.push_back(branchID.toStdString());
+    params.push_back(branchId.ToString());
     params.push_back(prompt.toStdString());
     params.push_back(eventOverBy);
     params.push_back(answerOptionality);
@@ -153,13 +150,8 @@ void DecisionCreationWidget::editArray(json_spirit::Array array)
     branchLabel.append(branchID.left(12));
     branchLabel.append("...");
     ui->labelBranch->setText(branchLabel);
-    if (branchID == "0f894a25c5e0318ee148fe54600ebbf50782f0a1df1eb2aab06321a8ccec270d") {
-        ui->comboBoxBranch->setCurrentIndex(0); // Main
-    } else if (branchID == "419cd87761f45c108a976ca6d93d4929c7c4d1ff4386f5089fc2f7ff7ae21ddf") {
-        ui->comboBoxBranch->setCurrentIndex(1); // Sports
-    } else if (branchID == "3277b5057ac9cda54e9edfbb45fd8bab38be1b5afc3cd6c587f6d17779f34f74") {
-        ui->comboBoxBranch->setCurrentIndex(2); // Econ
-    }
+    uint256 uBranch = uint256S(branchID.toStdString());
+    ui->branchSelect->setCurrentId(uBranch);
 
     // Load prompt
     json_spirit::Value prompt = array.at(2);
