@@ -3,8 +3,9 @@
 
 #include <QItemSelectionModel>
 #include <QModelIndexList>
+#include <QAbstractItemView>
 
-DecisionSelectionView::DecisionSelectionView(QWidget *parent) :
+DecisionSelectionView::DecisionSelectionView(QAbstractItemView::SelectionMode selectionMode, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DecisionSelectionView)
 {
@@ -13,6 +14,7 @@ DecisionSelectionView::DecisionSelectionView(QWidget *parent) :
     // Setup model and decision selection table
     decisionSelectionTable = new QTableView(this);
     decisionSelectionTable->horizontalHeader()->setStretchLastSection(true);
+    decisionSelectionTable->setSelectionMode(selectionMode);
 
 #if QT_VERSION < 0x050000
     decisionSelectionTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
@@ -44,7 +46,9 @@ void DecisionSelectionView::loadDecisions(QList<marketDecision *> decisions)
 void DecisionSelectionView::on_table_doubleClicked(QModelIndex index)
 {
     QString hex = decisionSelectionTable->model()->data(decisionSelectionTable->model()->index(index.row(), 1)).toString();
-    emit decisionSelected(hex);
+    QStringList hexList;
+    hexList.push_back(hex);
+    emit decisionsSelected(hexList);
     emit done();
 }
 
@@ -54,13 +58,13 @@ void DecisionSelectionView::on_pushButtonDone_clicked()
     QStringList hexList;
 
     if (selection->hasSelection()) {
-        QModelIndexList list = selection->selectedRows();
+        QModelIndexList list = selection->selectedRows(1);
 
         for (int i = 0; i < list.size(); i++) {
-            QString hex = decisionSelectionTable->model()->data(decisionSelectionTable->model()->index(i, 1)).toString();
+            QString hex = decisionSelectionTable->model()->data(list[i]).toString();
             hexList.push_back(hex);
         }
     }
-    emit multipleDecisionsSelected(hexList);
+    emit decisionsSelected(hexList);
     emit done();
 }

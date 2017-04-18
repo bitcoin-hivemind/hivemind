@@ -6,6 +6,7 @@
 #include <QTableView>
 #include <QWidget>
 #include <QStringList>
+#include <QAbstractItemView>
 
 namespace Ui {
 class DecisionSelectionView;
@@ -16,7 +17,7 @@ class DecisionSelectionView : public QWidget
     Q_OBJECT
 
 public:
-    explicit DecisionSelectionView(QWidget *parent = 0);
+    explicit DecisionSelectionView(QAbstractItemView::SelectionMode selectionMode, QWidget *parent = 0);
     ~DecisionSelectionView();
 
 public slots:
@@ -24,8 +25,7 @@ public slots:
     void on_table_doubleClicked(QModelIndex index);
 
 signals:
-    void decisionSelected(QString decisionHex);
-    void multipleDecisionsSelected(QStringList hexList);
+    void decisionsSelected(QStringList hexList);
     void done();
 
 private slots:
