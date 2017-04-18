@@ -21,7 +21,7 @@ public:
 private slots:
     void on_pushButtonSelectDecision_clicked();
 
-    void decisionSelected(QString decisionHex);
+    void decisionsSelected(QStringList hexList);
 
     void on_pushButtonCreateRevealVote_clicked();
 

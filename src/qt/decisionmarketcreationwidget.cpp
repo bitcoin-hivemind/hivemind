@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QAbstractItemView>
 
 #include "txdb.h"
 
@@ -169,17 +170,14 @@ void DecisionMarketCreationWidget::on_pushButtonSelectDecision_clicked()
     vector<marketDecision *> decisions = pmarkettree->GetDecisions(uBranch);
 
     // Setup the decision selection widget
-    decisionSelection = new DecisionSelectionView(this);
+    decisionSelection = new DecisionSelectionView(QAbstractItemView::ExtendedSelection, this);
     QVector<marketDecision *> qvDecisions = QVector<marketDecision *>::fromStdVector(decisions);
     QList<marketDecision *> qlDecisions = QList<marketDecision *>::fromVector(qvDecisions);
     decisionSelection->loadDecisions(qlDecisions);
 
     // Connect signals
-    connect(decisionSelection, SIGNAL(decisionSelected(QString)),
-            this, SLOT(decisionSelected(QString)));
-
-    connect(decisionSelection, SIGNAL(multipleDecisionsSelected(QStringList)),
-            this, SLOT(multipleDecisionsSelected(QStringList)));
+    connect(decisionSelection, SIGNAL(decisionsSelected(QStringList)),
+            this, SLOT(decisionsSelected(QStringList)));
 
     // Display the decision selection widget
     QHBoxLayout *hbox = new QHBoxLayout(this);
@@ -283,12 +281,7 @@ void DecisionMarketCreationWidget::comboCreationUI()
     ui->labelAuthorAddress->hide();
 }
 
-void DecisionMarketCreationWidget::decisionSelected(QString decisionHex)
-{
-    ui->lineEditDecisions->setText(decisionHex);
-}
-
-void DecisionMarketCreationWidget::multipleDecisionsSelected(QStringList hexList)
+void DecisionMarketCreationWidget::decisionsSelected(QStringList hexList)
 {
     // Comma separated list of hex's
     QString csList = "";

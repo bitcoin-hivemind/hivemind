@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QAbstractItemView>
 
 #include <iostream>
 #include "base58.h"
@@ -30,9 +31,13 @@ void VoteView::on_pushButtonSelectDecision_clicked()
     selectDecision();
 }
 
-void VoteView::decisionSelected(QString decisionHex)
+void VoteView::decisionsSelected(QStringList hexList)
 {
-    ui->lineEditDecisionID->setText(decisionHex);
+    if (hexList.length() >= 1) {
+        // The DecisionSelectionView is configured to only return a single decision
+        QString decisionHex = hexList[0];
+        ui->lineEditDecisionID->setText(decisionHex);
+    }
 }
 
 void VoteView::on_pushButtonCreateRevealVote_clicked()
@@ -269,14 +274,14 @@ void VoteView::selectDecision()
     vector<marketDecision *> decisions = pmarkettree->GetDecisions(uBranch);
 
     // Setup the decision selection widget
-    decisionSelection = new DecisionSelectionView(this);
+    decisionSelection = new DecisionSelectionView(QAbstractItemView::SingleSelection, this);
     QVector<marketDecision *> qvDecisions = QVector<marketDecision *>::fromStdVector(decisions);
     QList<marketDecision *> qlDecisions = QList<marketDecision *>::fromVector(qvDecisions);
     decisionSelection->loadDecisions(qlDecisions);
 
     // Connect signals
-    connect(decisionSelection, SIGNAL(decisionSelected(QString)),
-            this, SLOT(decisionSelected(QString)));
+    connect(decisionSelection, SIGNAL(decisionsSelected(QStringList)),
+            this, SLOT(decisionsSelected(QStringList)));
 
     // Display the decision selection widget
     QHBoxLayout *hbox = new QHBoxLayout(this);
