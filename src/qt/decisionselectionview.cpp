@@ -58,10 +58,10 @@ void DecisionSelectionView::on_pushButtonDone_clicked()
     QStringList hexList;
 
     if (selection->hasSelection()) {
-        QModelIndexList list = selection->selectedRows();
+        QModelIndexList list = selection->selectedRows(1);
 
         for (int i = 0; i < list.size(); i++) {
-            QString hex = decisionSelectionTable->model()->data(decisionSelectionTable->model()->index(i, 1)).toString();
+            QString hex = decisionSelectionTable->model()->data(list[i]).toString();
             hexList.push_back(hex);
         }
     }
