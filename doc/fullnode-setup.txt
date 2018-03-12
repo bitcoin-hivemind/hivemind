@@ -58,7 +58,7 @@ Compile the source code, skip this step if you will be downloading the pre-built
 binaries:
   cd hivemind
   ./autogen.sh
-  ./configure --with-incompatible-bdb
+  ./configure --with-incompatible-bdb --with-gui=qt4
   make
 
   Note: add the -j switch to make in order to speed up compilation. For example
