@@ -2710,7 +2710,7 @@ Value createdecision(const Array& params, bool fHelp)
 Value createmarket(const Array& params, bool fHelp)
 {
     string strHelp =
-        "createmarket address decisionid[,...] B tradingfee address title"
+        "createmarket address decisionid[,...] B tradingfee maxcommission title"
         " description tags[,...] maturation"
         "\nCreates a new market on the decisions."
         "\n1. address             (base58 address)"
